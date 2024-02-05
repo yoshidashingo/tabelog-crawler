@@ -1,7 +1,9 @@
 import express from 'express';
 import { getStoreInfo, getPrefectures, getAreasInPrefecture, get50List } from './lib/tabelog.js';
-
+import morgan from 'morgan';
 const app = express();
+
+app.use(morgan('dev'));
 
 app.get('/store', async (req, res) => {
     const url = req.query.url || 'https://tabelog.com/tokyo/A1314/A131401/13136847';
