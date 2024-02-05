@@ -1,18 +1,9 @@
 import express from 'express';
-import { getStoreInfo, getPrefectures, getAreasInPrefecture, get50List } from './lib/tabelog.js';
+import { getStoreInfo, getPrefectures, getAreasInPrefecture, get50List, getStoreListBy50Key } from './lib/tabelog.js';
 import morgan from 'morgan';
 const app = express();
 
 app.use(morgan('dev'));
-
-app.get('/store', async (req, res) => {
-    const url = req.query.url || 'https://tabelog.com/tokyo/A1314/A131401/13136847';
-    const storeInfo = await getStoreInfo(url);
-    res.json({
-        success: true,
-        data: storeInfo
-    });
-});
 
 app.get('/prefectures', async (req, res) => {
     const result = await getPrefectures();
@@ -38,6 +29,26 @@ app.get('/fifty', async (req, res) => {
     res.json({
         success: true,
         data: result
+    });
+});
+
+app.get('/stores', async (req, res) => {
+    const prefectureKey = req.query.prefectureKey;
+    const areaKey = req.query.areaKey;
+    const fiftyKey = req.query.fiftyKey;
+    const result = await getStoreListBy50Key({ key: prefectureKey }, { key: areaKey }, fiftyKey);
+    res.json({
+        success: true,
+        data: result
+    });
+});
+
+app.get('/store', async (req, res) => {
+    const href = req.query.href;
+    const storeInfo = await getStoreInfo(href);
+    res.json({
+        success: true,
+        data: storeInfo
     });
 });
 
