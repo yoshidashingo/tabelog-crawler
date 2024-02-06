@@ -15,7 +15,7 @@ let fifties, fifty;
 let stores, store;
 
 describe("getPrefectures", () => {
-    it('should return an array of prefectures', async () => {
+    it('should return an array of prefecture', async () => {
         prefectures = await getPrefectures();
         prefectures.should.be.an('array');
         prefectures.should.have.lengthOf(47);
@@ -56,7 +56,7 @@ describe("get50List", () => {
 });
 
 describe("getStoreListBy50Key", () => {
-    it('should return an array of stores', async () => {
+    it('should return an array of store', async () => {
         stores = await getStoreListBy50Key(prefecture, area, fifty.key);
         stores.should.be.an('array');
         store = stores[0];

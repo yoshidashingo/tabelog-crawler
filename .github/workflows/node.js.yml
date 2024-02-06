@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron:  '* 1 * * *'
+    - cron:  '0 * * * *'
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
     # https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions
 jobs:
