@@ -9,6 +9,7 @@
         "test": "mocha",
         "arch:start": "cd arch && docker-compose up -d",
         "arch:stop": "cd arch && docker-compose down",
+        "script:gen-fifty-json": "node script/gen-fifty-json.js",
         "mq:first-step-producer": "node rabbitmq/first-step-producer.js",
         "mq:first-step-consumer": "node rabbitmq/first-step-consumer.js"
     },
