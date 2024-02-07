@@ -6,7 +6,11 @@
     "type": "module",
     "scripts": {
         "start": "nodemon app.js",
-        "test": "mocha"
+        "test": "mocha",
+        "arch:start": "cd arch && docker-compose up -d",
+        "arch:stop": "cd arch && docker-compose down",
+        "mq:first-step-producer": "node rabbitmq/first-step-producer.js",
+        "mq:first-step-consumer": "node rabbitmq/first-step-consumer.js"
     },
     "repository": {
         "type": "git",
@@ -20,9 +24,13 @@
     },
     "homepage": "https://github.com/yoshidashingo/tabelog-crawler#readme",
     "dependencies": {
+        "amqplib": "^0.10.3",
         "axios": "^1.6.7",
         "cheerio": "^1.0.0-rc.12",
+        "dotenv": "^16.4.1",
         "express": "^4.18.2",
+        "moment": "^2.30.1",
+        "mongoose": "^8.1.1",
         "morgan": "^1.10.0"
     },
     "devDependencies": {
