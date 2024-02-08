@@ -1,17 +1,20 @@
 
 import amqp from "amqplib";
 import dotnenv from "dotenv";
+import moment from 'moment';
 import '../mongodb.js';
 import {
     getStoreListBy50Key
 } from '../lib/tabelog.js';
-import Store from '../model/store.js';
+import initTemp from '../model/temp.js';
 
 dotnenv.config({ path: process.cwd() + "/.env" });
 
 const QUEUE_NAME = 'tabelog_first_step';
 
 async function main() {
+    const date = moment(new Date()).format('YYYY-MM-DD');
+    const Temp = initTemp(date);
     let connection;
     try {
         connection = await amqp.connect(process.env.RABBITMQ_URL);
@@ -19,7 +22,7 @@ async function main() {
 
         const queue = QUEUE_NAME;
         await channel.assertQueue(queue, { durable: true });
-        channel.prefetch(1);
+        channel.prefetch(100);
         await channel.consume(queue, cb, { noAck: false });
         async function cb(msg) {
             try {
@@ -34,7 +37,7 @@ async function main() {
                 };
                 const fiftyKey = obj.fiftyKey;
                 const stores = await getStoreListBy50Key(prefecture, area, fiftyKey);
-                await Store.insertMany(stores);
+                await Temp.insertMany(stores.map(i => ({ url: i.url })));
                 console.log(`${obj.prefectureLabel} > ${obj.areaLabel} > ${obj.fiftyLabel}(${obj.amountOfStores})`);
                 channel.ack(msg);
             } catch (error) {
