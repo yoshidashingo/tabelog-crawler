@@ -22,7 +22,7 @@ async function main() {
 
         const queue = QUEUE_NAME;
         await channel.assertQueue(queue, { durable: true });
-        channel.prefetch(100);
+        channel.prefetch(10);
         await channel.consume(queue, cb, { noAck: false });
         async function cb(msg) {
             try {
@@ -37,7 +37,7 @@ async function main() {
                 };
                 const fiftyKey = obj.fiftyKey;
                 const stores = await getStoreListBy50Key(prefecture, area, fiftyKey);
-                await Temp.insertMany(stores.map(i => ({ _id: i.url })));
+                await Temp.insertMany(stores.map(i => ({ url: i.url })));
                 console.log(`${obj.prefectureLabel} > ${obj.areaLabel} > ${obj.fiftyLabel}(${obj.amountOfStores})`);
                 channel.ack(msg);
             } catch (error) {
