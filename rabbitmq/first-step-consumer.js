@@ -22,7 +22,7 @@ async function main() {
 
         const queue = QUEUE_NAME;
         await channel.assertQueue(queue, { durable: true });
-        channel.prefetch(10);
+        channel.prefetch(100);
         await channel.consume(queue, cb, { noAck: false });
         async function cb(msg) {
             try {
