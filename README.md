@@ -23,12 +23,22 @@ npm run arch:start                  # run mongodb and rabbitmq
 npm run arch:stop                   # stop mongodb and rabbitmq
 
 npm run script:gen-fifty-json       # get all fities and save to fifty.json file
+npm run script:init-diff            # init diffs collection
 
 npm run mq:first-step-producer      # mq producer for get all url of stores
 npm run mq:first-step-consumer      # mq consumer for get all url of stores
 
 npm run mq:second-step-producer     # mq producer for update the store by url
 npm run mq:second-step-consumer     # mq consumer for update the store by url
+```
+
+### Use one PC as the first step worker
+
+```sh
+git pull
+npm i
+cp .env.example .env
+npm run mq:first-step-consumer
 ```
 
 ### Diagram
