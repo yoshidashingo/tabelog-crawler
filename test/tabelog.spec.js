@@ -64,13 +64,13 @@ describe("getStoreListBy50Key", () => {
         store.should.have.property('name');
         store.should.have.property('prefectureKey');
         store.should.have.property('areaKey');
-        store.should.have.property('href');
+        store.should.have.property('url');
     });
 });
 
 describe("getStoreInfo", () => {
     it('should return an object of store', async () => {
-        const sampleUrl = store.href;
+        const sampleUrl = store.url;
         const sampleStore = await getStoreInfo(sampleUrl);
         sampleStore.should.be.an('object');
         sampleStore.should.have.property('name');

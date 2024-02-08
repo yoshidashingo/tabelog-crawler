@@ -44,8 +44,8 @@ app.get('/stores', async (req, res) => {
 });
 
 app.get('/store', async (req, res) => {
-    const href = req.query.href;
-    const storeInfo = await getStoreInfo(href);
+    const url = req.query.url;
+    const storeInfo = await getStoreInfo(url);
     res.json({
         success: true,
         data: storeInfo

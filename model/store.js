@@ -14,7 +14,7 @@ const storeSchema = new Schema({
     prefectureLabel: String,
     areaKey: String,
     areaLabel: String,
-    href: {
+    url: {
         type: String,
         required: true
     },
