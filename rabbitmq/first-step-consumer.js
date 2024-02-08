@@ -37,7 +37,7 @@ async function main() {
                 };
                 const fiftyKey = obj.fiftyKey;
                 const stores = await getStoreListBy50Key(prefecture, area, fiftyKey);
-                await Temp.insertMany(stores.map(i => ({ url: i.url })));
+                await Temp.insertMany(stores.map(i => ({ _id: i.url })));
                 console.log(`${obj.prefectureLabel} > ${obj.areaLabel} > ${obj.fiftyLabel}(${obj.amountOfStores})`);
                 channel.ack(msg);
             } catch (error) {

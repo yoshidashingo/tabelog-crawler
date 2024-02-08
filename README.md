@@ -52,6 +52,7 @@ npm run mq:first-step-consumer
 -   http://cheeriojs.github.io/cheerio/
 -   https://www.chaijs.com/guide/styles/#should
 -   https://crontab.guru/examples.html
+-   https://amqp-node.github.io/amqplib/channel_api.html#channel_assertQueue
 
 ### Note
 

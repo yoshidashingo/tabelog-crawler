@@ -4,7 +4,7 @@ function initTemp(date) {
     const { Schema } = mongoose;
 
     const TempSchema = new Schema({
-        url: String
+        _id: String
     }, { versionKey: false });
 
     const Temp = mongoose.model(`Temp_${date}`, TempSchema);
