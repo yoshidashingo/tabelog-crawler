@@ -3,13 +3,16 @@ import amqp from "amqplib";
 import fs from "fs";
 import dotnenv from "dotenv";
 dotnenv.config({ path: process.cwd() + "/.env" });
+import {
+    getFifties
+} from '../lib/tabelog.js';
 
 const QUEUE_NAME = 'tabelog_first_step';
 
 async function main() {
     let connection;
     try {
-        const arr = JSON.parse(fs.readFileSync(process.cwd() + "/json/fifty.json"));
+        const arr = await getFifties();
         const fiftyArr = [];
 
         arr.forEach((i) => {

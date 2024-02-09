@@ -6,7 +6,7 @@ import {
 async function init() {
     const arr = await getFifties();
     fs.writeFileSync(
-        process.cwd() + "/json/fifty2.json",
+        process.cwd() + "/json/fifty.json",
         JSON.stringify(arr, null, 2)
     );
 }
