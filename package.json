@@ -11,8 +11,7 @@
         "arch:stop": "cd arch && docker-compose down",
         "script:cron": "node script/cron",
         "mq:url-ec2-producer": "node rabbitmq/url-ec2-producer.js",
-        "mq:ec2-consumer": "node rabbitmq/ec2-consumer.js",
-        "mq:url-consumer": "node rabbitmq/url-consumer.js"
+        "mq:ec2-consumer": "node rabbitmq/ec2-consumer.js"
     },
     "repository": {
         "type": "git",
