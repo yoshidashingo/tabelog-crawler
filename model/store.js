@@ -3,17 +3,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const storeSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
+    name: String,
     category: String,
     tel: String,
     address: String,
-    prefectureKey: String,
-    prefectureLabel: String,
-    areaKey: String,
-    areaLabel: String,
     url: {
         type: String,
         required: true

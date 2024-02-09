@@ -24,20 +24,17 @@ npm run arch:stop                   # stop mongodb and rabbitmq
 
 npm run script:cron                 # run crawler task every day
 
-npm run mq:first-step-producer      # mq producer for get all url of stores
-npm run mq:first-step-consumer      # mq consumer for get all url of stores
-
-npm run mq:second-step-producer     # mq producer for update the store by url
-npm run mq:second-step-consumer     # mq consumer for update the store by url
+npm run mq:url-ec2-producer         # produce url and ec2 queues
+npm run mq:ec2-consumer             # handle ec2 queue
 ```
 
-### Use one PC as the first step worker
+### Distrubuted deployment
 
 ```sh
-git pull
-npm i
-cp .env.example .env
-npm run mq:first-step-consumer
+npm run script:cron
+npm run mq:url-ec2-producer
+npm run mq:ec2-consumer
+
 ```
 
 ### Diagram

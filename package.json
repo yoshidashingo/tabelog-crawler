@@ -10,8 +10,9 @@
         "arch:start": "cd arch && docker-compose up -d",
         "arch:stop": "cd arch && docker-compose down",
         "script:cron": "node script/cron",
-        "mq:first-step-producer": "node rabbitmq/first-step-producer.js",
-        "mq:first-step-consumer": "node rabbitmq/first-step-consumer.js"
+        "mq:url-ec2-producer": "node rabbitmq/url-ec2-producer.js",
+        "mq:ec2-consumer": "node rabbitmq/ec2-consumer.js",
+        "mq:url-consumer": "node rabbitmq/url-consumer.js"
     },
     "repository": {
         "type": "git",
