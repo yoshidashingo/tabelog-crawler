@@ -63,7 +63,7 @@ async function main() {
 
         // waiting 10s
         setTimeout(async () => {
-            // const instanceID = await createEC2AndRunConsumer();
+            const instanceID = await createEC2AndRunConsumer();
             await checkQueueISEmpty(instanceID);
         }, 1000 * 10);
     } catch (error) {
