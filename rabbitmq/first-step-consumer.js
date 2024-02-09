@@ -7,6 +7,9 @@ import {
     getStoreListBy50Key
 } from '../lib/tabelog.js';
 import initTemp from '../model/temp.js';
+import {
+    RABBITMQ_PREFECTH
+} from '../constant.js';
 
 dotnenv.config({ path: process.cwd() + "/.env" });
 const QUEUE_NAME = 'tabelog_first_step';
@@ -21,7 +24,7 @@ async function main() {
 
         const queue = QUEUE_NAME;
         await channel.assertQueue(queue, { durable: true });
-        channel.prefetch(100);
+        channel.prefetch(RABBITMQ_PREFECTH);
         await channel.consume(queue, cb, { noAck: false });
         async function cb(msg) {
             try {

@@ -11,7 +11,7 @@ import {
     deleteEC2
 } from '../lib/ec2.js';
 
-async function checkQueueISEmpty() {
+async function checkQueueISEmpty(instanceID) {
     const interval = setInterval(async () => {
         let connection = await amqp.connect(process.env.RABBITMQ_URL);
         const channel = await connection.createChannel();
@@ -20,7 +20,7 @@ async function checkQueueISEmpty() {
         console.log('count of remaining messages:', messageCount);
         if (messageCount === 0) {
             clearInterval(interval);
-            await deleteEC2();
+            await deleteEC2(instanceID);
             process.exit(0);
         }
     }, 1000 * 60 * 5); // every 5min
@@ -31,41 +31,40 @@ const QUEUE_NAME = 'tabelog_first_step';
 async function main() {
     let connection;
     try {
-        const arr = await getFifties();
-        const fiftyArr = [];
+        // const arr = await getFifties();
+        // const fiftyArr = [];
 
-        arr.forEach((i) => {
-            const fifties = i.fifties;
-            fifties.forEach((fifty) => {
-                fiftyArr.push({
-                    prefectureKey: i.prefectureKey,
-                    prefectureLabel: i.prefectureLabel,
-                    areaKey: i.areaKey,
-                    areaLabel: i.areaLabel,
-                    fiftyKey: fifty.key,
-                    fiftyLabel: fifty.label,
-                    amountOfStores: fifty.total,
-                });
-            });
-        });
+        // arr.forEach((i) => {
+        //     const fifties = i.fifties;
+        //     fifties.forEach((fifty) => {
+        //         fiftyArr.push({
+        //             prefectureKey: i.prefectureKey,
+        //             prefectureLabel: i.prefectureLabel,
+        //             areaKey: i.areaKey,
+        //             areaLabel: i.areaLabel,
+        //             fiftyKey: fifty.key,
+        //             fiftyLabel: fifty.label,
+        //             amountOfStores: fifty.total,
+        //         });
+        //     });
+        // });
 
-        connection = await amqp.connect(process.env.RABBITMQ_URL);
-        const channel = await connection.createChannel();
-        const queue = QUEUE_NAME;
+        // connection = await amqp.connect(process.env.RABBITMQ_URL);
+        // const channel = await connection.createChannel();
+        // const queue = QUEUE_NAME;
 
-        await channel.assertQueue(queue, { durable: true });
-        fiftyArr.forEach((i) => {
-            console.log(`${i.prefectureLabel} > ${i.areaLabel} > ${i.fiftyLabel}(${i.amountOfStores})`);
-            channel.sendToQueue(queue, Buffer.from(JSON.stringify(i)), {
-                persistent: true,
-            });
-        });
-        console.log("done");
+        // await channel.assertQueue(queue, { durable: true });
+        // fiftyArr.forEach((i) => {
+        //     channel.sendToQueue(queue, Buffer.from(JSON.stringify(i)), {
+        //         persistent: true,
+        //     });
+        // });
+        // console.log("done");
 
         // waiting 10s
         setTimeout(async () => {
-            await createEC2AndRunConsumer();
-            await checkQueueISEmpty();
+            const instanceID = await createEC2AndRunConsumer();
+            await checkQueueISEmpty(instanceID);
         }, 1000 * 10);
     } catch (error) {
         console.error(error);
