@@ -51,4 +51,5 @@ npm run mq:ec2-consumer
 ```sh
 $ rabbitmqctl add_user myUser myPass
 $ rabbitmqctl set_user_tags myUser administrator
+$ rabbitmqctl delete_queue hello
 ```
