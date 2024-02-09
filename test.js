@@ -1,3 +1,3 @@
-import firstStepProducer from './rabbitmq/first-step-producer.js';
+import start from './rabbitmq/start.js';
 
-firstStepProducer();
+start();
