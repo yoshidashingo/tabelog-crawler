@@ -8,7 +8,7 @@ import {
 } from '../lib/tabelog.js';
 import initTemp from '../model/temp.js';
 import {
-    RABBITMQ_PREFECTH
+    RABBITMQ_PREFETCH
 } from '../constant.js';
 
 dotnenv.config({ path: process.cwd() + "/.env" });
@@ -24,7 +24,7 @@ async function main() {
 
         const queue = QUEUE_NAME;
         await channel.assertQueue(queue, { durable: true });
-        channel.prefetch(RABBITMQ_PREFECTH);
+        channel.prefetch(RABBITMQ_PREFETCH);
         await channel.consume(queue, cb, { noAck: false });
         async function cb(msg) {
             try {
