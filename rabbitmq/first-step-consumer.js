@@ -52,4 +52,8 @@ async function main() {
     }
 }
 
-export default main;
+process.on('unhandledRejection', (reason, promise) => {
+    console.log(reason, promise);
+});
+
+main();
