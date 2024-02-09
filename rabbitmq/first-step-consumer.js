@@ -13,7 +13,7 @@ const QUEUE_NAME = 'tabelog_first_step';
 
 async function main() {
     const date = moment(new Date()).format('YYYY-MM-DD');
-    const Temp = initTemp(date);
+    const Temp = initTemp(`2024-02-06`);
     let connection;
     try {
         connection = await amqp.connect(process.env.RABBITMQ_URL);
