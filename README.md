@@ -37,12 +37,6 @@ npm run mq:ec2-consumer
 
 ```
 
-### Diagram
-
-##### 一段階
-
-![](./assets/first-step-diagram.svg)
-
 ### Docs
 
 -   http://cheeriojs.github.io/cheerio/
