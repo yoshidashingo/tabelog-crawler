@@ -9,7 +9,6 @@ import {
 import initTemp from '../model/temp.js';
 
 dotnenv.config({ path: process.cwd() + "/.env" });
-
 const QUEUE_NAME = 'tabelog_first_step';
 
 async function main() {
@@ -50,4 +49,4 @@ async function main() {
     }
 }
 
-main();
+export default main;

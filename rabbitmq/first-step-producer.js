@@ -1,11 +1,30 @@
 
 import amqp from "amqplib";
-import fs from "fs";
 import dotnenv from "dotenv";
+
 dotnenv.config({ path: process.cwd() + "/.env" });
 import {
     getFifties
 } from '../lib/tabelog.js';
+import {
+    createEC2AndRunConsumer,
+    deleteEC2
+} from '../lib/ec2.js';
+
+async function checkQueueISEmpty() {
+    const interval = setInterval(async () => {
+        let connection = await amqp.connect(process.env.RABBITMQ_URL);
+        const channel = await connection.createChannel();
+        const queue = QUEUE_NAME;
+        const { messageCount } = await channel.assertQueue(queue, { durable: true });
+        console.log('count of remaining messages:', messageCount);
+        if (messageCount === 0) {
+            clearInterval(interval);
+            await deleteEC2();
+            process.exit(0);
+        }
+    }, 1000 * 60 * 5); // every 5min
+}
 
 const QUEUE_NAME = 'tabelog_first_step';
 
@@ -42,9 +61,15 @@ async function main() {
             });
         });
         console.log("done");
+
+        // waiting 10s
+        setTimeout(async () => {
+            await createEC2AndRunConsumer();
+            await checkQueueISEmpty();
+        }, 1000 * 10);
     } catch (error) {
         console.error(error);
     }
 }
 
-main();
+export default main;
