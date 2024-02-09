@@ -15,8 +15,9 @@ dotnenv.config({ path: process.cwd() + "/.env" });
 const QUEUE_NAME = 'url';
 
 async function main() {
-    const date = moment(new Date()).format('YYYY-MM-DD');
-    const Temp = initTemp(`2024-02-04`);
+    // JST
+    const date = moment(new Date()).utcOffset('+0900').format('YYYY-MM-DD');
+    const Temp = initTemp(date);
     let connection;
     try {
         connection = await amqp.connect(process.env.RABBITMQ_URL);
