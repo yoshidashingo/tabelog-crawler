@@ -23,7 +23,7 @@ async function checkQueueISEmpty(instanceID) {
             await deleteEC2(instanceID);
             process.exit(0);
         }
-    }, 1000 * 60 * 5); // every 5min
+    }, 1000 * 10); // every 5min
 }
 
 const QUEUE_NAME = 'tabelog_first_step';
@@ -63,7 +63,7 @@ async function main() {
 
         // waiting 10s
         setTimeout(async () => {
-            const instanceID = await createEC2AndRunConsumer();
+            // const instanceID = await createEC2AndRunConsumer();
             await checkQueueISEmpty(instanceID);
         }, 1000 * 10);
     } catch (error) {
