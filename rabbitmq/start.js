@@ -17,7 +17,7 @@ async function main() {
     });
     setTimeout(() => {
         console.log("done");
-        process.exit(0);
+        // process.exit(0);
     }, 1000);
 }
 
