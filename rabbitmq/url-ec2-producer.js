@@ -43,7 +43,7 @@ async function main() {
 
             await urlChannel.assertQueue(urlQueue, { durable: true });
             fiftyArr.forEach((i) => {
-                urlChannel.sendToQueue(queue, Buffer.from(JSON.stringify(i)), {
+                urlChannel.sendToQueue(urlQueue, Buffer.from(JSON.stringify(i)), {
                     persistent: true,
                 });
             });
