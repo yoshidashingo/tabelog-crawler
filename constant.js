@@ -5,3 +5,5 @@ export const EC2_COUNT = 2;
 export const QUEUE_GO = 'go';
 export const QUEUE_URL = 'url';
 export const QUEUE_EC2 = 'ec2';
+export const QUEUE_UPDATE = 'update';
+export const QUEUE_DIFF = 'diff';

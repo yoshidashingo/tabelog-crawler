@@ -7,18 +7,21 @@ import {
 import {
     EC2_COUNT,
     QUEUE_EC2,
-    QUEUE_URL
+    QUEUE_URL,
+    QUEUE_DIFF
 } from '../constant.js';
 
 import {
     consume,
-    getChannel
+    getChannel,
+    sendMessage
 } from './mq.js';
 
 async function main() {
     let channel = await getChannel(QUEUE_EC2);
     consume(channel, QUEUE_EC2, 1, callback);
     async function callback(msg) {
+        console.log('come in');
         try {
             const instanceIDs = await createEC2AndRunConsumer(EC2_COUNT);
             await checkQueueISEmpty(instanceIDs);
@@ -38,6 +41,8 @@ async function checkQueueISEmpty(instanceIDs) {
         if (messageCount === 0) {
             clearInterval(interval);
             await deleteEC2(instanceIDs);
+            const diffChannel = await getChannel(QUEUE_DIFF);
+            sendMessage(diffChannel, QUEUE_DIFF)
         }
     }, 1000 * 10);
 }

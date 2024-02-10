@@ -1,8 +1,7 @@
-import '../mongodb.js';
 import {
     getStoreListBy50Key
 } from '../lib/tabelog.js';
-import initTemp from '../model/temp.js';
+
 import {
     consume,
     getChannel
@@ -14,14 +13,15 @@ import {
 } from '../constant.js';
 
 import {
-    getFormattedDateTime
+    getLastDay,
+    getToday
 } from '../lib/utility.js';
+import redis from '../redis.js';
 
 async function main() {
-    const tempDay = getFormattedDateTime();
-    const Temp = initTemp(tempDay);
+    const today = getToday();
 
-    let channel = await getChannel();
+    let channel = await getChannel(QUEUE_URL);
     consume(channel, QUEUE_URL, RABBITMQ_PREFETCH, callback);
 
     async function callback(msg) {
@@ -37,7 +37,10 @@ async function main() {
             };
             const fiftyKey = obj.fiftyKey;
             const stores = await getStoreListBy50Key(prefecture, area, fiftyKey);
-            await Temp.insertMany(stores.map(i => ({ url: i.url })));
+            const urls = stores.map(i => i.url);
+            if (urls.length) {
+                await redis.SADD(today, urls);
+            }
             console.log(`${obj.prefectureLabel} > ${obj.areaLabel} > ${obj.fiftyLabel}(${obj.amountOfStores})`);
             channel.ack(msg);
         } catch (error) {

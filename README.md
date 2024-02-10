@@ -43,6 +43,7 @@ npm run mq:ec2-consumer
 -   https://www.chaijs.com/guide/styles/#should
 -   https://crontab.guru/examples.html
 -   https://amqp-node.github.io/amqplib/channel_api.html#channel_assertQueue
+-   https://blog.csdn.net/m0_64393446/article/details/130861264
 
 ### Note
 
