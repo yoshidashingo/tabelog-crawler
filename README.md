@@ -9,7 +9,7 @@
 ```sh
 npm i
 cp .env.example .env
-npm run arch:start
+npm run db:start
 npm start
 ```
 
