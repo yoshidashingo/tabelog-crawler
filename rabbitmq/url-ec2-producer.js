@@ -1,27 +1,24 @@
-
-import amqp from "amqplib";
-import dotnenv from "dotenv";
 import {
     getFifties
 } from '../lib/tabelog.js';
+import {
+    QUEUE_EC2,
+    QUEUE_URL,
+    QUEUE_GO
+} from '../constant.js';
 
-dotnenv.config({ path: process.cwd() + "/.env" });
-const QUEUE_NAME = 'go';
+import {
+    consume,
+    getChannel,
+    sendMessage
+} from './mq.js';
+
 
 async function main() {
-    console.log(`start ${QUEUE_NAME}`);
-    let connection = await amqp.connect(process.env.RABBITMQ_URL);
-    const channel = await connection.createChannel();
-
-    const queue = QUEUE_NAME;
-    await channel.assertQueue(queue, { durable: true });
-    channel.prefetch(1);
-    await channel.consume(queue, cb, { noAck: false });
-    async function cb(msg) {
+    let channel = await getChannel(QUEUE_GO);
+    consume(channel, QUEUE_GO, 1, callback);
+    async function callback(msg) {
         try {
-            const date = msg.content.toString();
-            const urlQueue = 'url';
-            console.log(`start ${urlQueue}`);
             const arr = await getFifties();
             const fiftyArr = [];
 
@@ -39,23 +36,16 @@ async function main() {
                     });
                 });
             });
-            const urlChannel = await connection.createChannel();
 
-            await urlChannel.assertQueue(urlQueue, { durable: true });
+            const urlChannel = await getChannel(QUEUE_URL);
             fiftyArr.forEach((i) => {
-                urlChannel.sendToQueue(urlQueue, Buffer.from(JSON.stringify(i)), {
-                    persistent: true,
-                });
+                sendMessage(urlChannel, QUEUE_URL, i)
             });
-            const ec2Queue = 'ec2';
-            console.log(`start ${ec2Queue}`);
 
-            const ec2Channel = await connection.createChannel();
-            await ec2Channel.assertQueue(ec2Queue, { durable: true });
-            ec2Channel.sendToQueue(ec2Queue, Buffer.from(date), {
-                persistent: true,
-            });
+            const ec2Channel = await getChannel(QUEUE_EC2);
+            sendMessage(ec2Channel, QUEUE_EC2)
             channel.ack(msg);
+            console.log('done');
         } catch (error) {
             console.error(error);
             process.exit(1);
