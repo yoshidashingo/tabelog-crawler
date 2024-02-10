@@ -19,8 +19,8 @@ npm start
 npm start                           # run http server
 npm test                            # run test
 
-npm run arch:start                  # run mongodb and rabbitmq
-npm run arch:stop                   # stop mongodb and rabbitmq
+npm run db:start                    # run mongodb and rabbitmq
+npm run db:stop                     # stop mongodb and rabbitmq
 
 npm run script:cron                 # run crawler task every day
 
@@ -52,4 +52,54 @@ npm run mq:ec2-consumer
 $ rabbitmqctl add_user myUser myPass
 $ rabbitmqctl set_user_tags myUser administrator
 $ rabbitmqctl delete_queue hello
+```
+
+### EC2 for url consumer
+
+**setup**
+
+```sh
+apt update
+
+# .env file for production env
+vim .env
+
+vim run.sh
+chmod +x run.sh
+
+git config --global user.name "tabelog"
+git config --global user.email "tabelog@example.com"
+ssh-keygen -t rsa -b 4096 -C "tabelog@example.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install --lts
+node -v
+npm i -g pm2
+# for geting ssh knows
+git clone git@github.com:yoshidashingo/tabelog-crawler.git
+cd tabelog-crawler
+vim .env
+cd
+vim run.sh
+chmod +x run.sh
+cd .ssh
+# download tablelog-crawler-dev.pem to here
+chmod 0400 *.pem
+cd
+mkdir .aws
+cd .aws
+vim credentials
+```
+
+**run.sh**
+
+```sh
+export PATH=$PATH:/home/ubuntu/.nvm/versions/node/v20.11.0/bin
+cd ~
+cd tabelog-crawler
+git pull
+npm i
+pm2 start rabbitmq/first-step-consumer.js
 ```

@@ -7,8 +7,8 @@
     "scripts": {
         "start": "nodemon app.js",
         "test": "mocha",
-        "arch:start": "cd arch && docker-compose up -d",
-        "arch:stop": "cd arch && docker-compose down",
+        "arch:start": "docker-compose up -d",
+        "arch:stop": "docker-compose down",
         "script:cron": "node script/cron",
         "mq:url-ec2-producer": "node rabbitmq/url-ec2-producer.js",
         "mq:ec2-consumer": "node rabbitmq/ec2-consumer.js"
