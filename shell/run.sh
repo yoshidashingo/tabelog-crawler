@@ -3,4 +3,4 @@ cd ~
 cd tabelog-crawler
 git pull
 npm i
-pm2 start rabbitmq/first-step-consumer.js
+pm2 start rabbitmq/url-consumer.js
