@@ -50,9 +50,12 @@ npm run mq:ec2-consumer
 1. Create or add a user to rabbitmq:
 
 ```sh
-$ rabbitmqctl add_user myUser myPass
-$ rabbitmqctl set_user_tags myUser administrator
-$ rabbitmqctl delete_queue hello
+rabbitmqctl add_user myUser myPass
+rabbitmqctl set_user_tags myUser administrator
+rabbitmqctl delete_queue hello
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl start_app
 ```
 
 ### EC2 for url consumer
