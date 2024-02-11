@@ -19,6 +19,7 @@ async function main() {
     consume(channel, QUEUE_GO, 1, callback);
     async function callback(msg) {
         try {
+            console.log('come in');
             const arr = await getFifties();
             const fiftyArr = [];
 

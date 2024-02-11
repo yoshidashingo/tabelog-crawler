@@ -32,6 +32,9 @@ async function main() {
                 store['status'] = 'done';
                 await store.save();
             }
+            if (stores.length) {
+                console.log('stores updated');
+            }
             channel.ack(msg);
         } catch (error) {
             console.error(error);

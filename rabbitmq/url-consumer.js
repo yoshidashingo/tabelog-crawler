@@ -13,7 +13,6 @@ import {
 } from '../constant.js';
 
 import {
-    getLastDay,
     getToday
 } from '../lib/utility.js';
 import redis from '../redis.js';
@@ -26,6 +25,7 @@ async function main() {
 
     async function callback(msg) {
         try {
+            console.log('come in');
             const obj = JSON.parse(msg.content.toString());
             const prefecture = {
                 key: obj.prefectureKey,

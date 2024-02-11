@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-
 import {
     consume,
     getChannel,
@@ -25,6 +23,7 @@ async function main() {
 
     async function callback(msg) {
         try {
+            console.log('come in');
             await createStoresByDiff();
             channel.ack(msg);
             let updateChannel = await getChannel(QUEUE_UPDATE);
@@ -44,6 +43,7 @@ async function createStoresByDiff() {
     if (yesterdayIsExist === 1) {
         const diffs = await redis.SDIFF([todayKey, yesterdayKey]);
         const arr = diffs.map(i => ({ url: i }));
+        console.log('new store:', arr.length);
         await Store.insertMany(arr);
         await redis.DEL(yesterdayKey);
         console.log('done');

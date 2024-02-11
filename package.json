@@ -10,8 +10,14 @@
         "db:start": "docker-compose up -d",
         "db:stop": "docker-compose down",
         "script:cron": "node script/cron",
-        "mq:url-ec2-producer": "node rabbitmq/url-ec2-producer.js",
-        "mq:ec2-consumer": "node rabbitmq/ec2-consumer.js"
+        "mq:aws:url-ec2-producer": "node rabbitmq/url-ec2-producer.js",
+        "mq:aws:update-consumer": "node rabbitmq/update-consumer.js",
+        "mq:office:ec2-consumer": "node rabbitmq/ec2-consumer.js",
+        "mq:office:diff-consumer": "node rabbitmq/diff-consumer.js",
+        "ami": "node rabbitmq/url-consumer.js",
+        "aws": "concurrently \"npm:mq:aws:*\"",
+        "office": "concurrently \"npm:mq:office:*\"",
+        "demo": "concurrently \"npm:office\" \"npm:aws\" \"npm:ami\""
     },
     "repository": {
         "type": "git",
@@ -40,6 +46,7 @@
     },
     "devDependencies": {
         "chai": "^5.0.3",
+        "concurrently": "^8.2.2",
         "mocha": "^10.2.0",
         "nodemon": "^3.0.3"
     }
