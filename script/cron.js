@@ -1,7 +1,8 @@
 import cron from 'node-cron';
 import start from '../rabbitmq/start.js';
 
-cron.schedule('36 2 * * *', () => {
+// 朝1時
+cron.schedule('0 1 * * *', () => {
     console.log(new Date().toLocaleString());
     start();
 }, {

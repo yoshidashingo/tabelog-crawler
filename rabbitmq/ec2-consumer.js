@@ -46,7 +46,7 @@ async function sendNotification() {
 
 async function checkQueueISEmpty(instanceIDs) {
     const interval = setInterval(async () => {
-        let channel = await getChannel();
+        let channel = await getChannel(QUEUE_URL);
         const { messageCount } = await channel.assertQueue(QUEUE_URL, { durable: true });
         console.log('unhandle messages:', messageCount);
         if (messageCount === 0) {
