@@ -1,10 +1,12 @@
 import express from 'express';
 import { getStoreInfo, getPrefectures, getAreasInPrefecture, get50List, getStoreListBy50Key } from './lib/tabelog.js';
 import morgan from 'morgan';
-const app = express();
-import moment from 'moment';
 import './mongodb.js';
-import Store from './model/store.js';
+import {
+    getLastestStores
+} from './service/store.js';
+
+const app = express();
 
 app.use(morgan('dev'));
 
@@ -36,15 +38,7 @@ app.get('/fifty', async (req, res) => {
 });
 
 app.get('/stores', async (req, res) => {
-    const JAPAN_OFFSET = '+0900';
-    const start = moment().utcOffset(JAPAN_OFFSET).startOf('day').toDate();
-    const end = moment().utcOffset(JAPAN_OFFSET).startOf('day').add(1, 'day').toDate();
-    const result = await Store.find({
-        createdAt: {
-            $gte: start,
-            $lt: end
-        }
-    });
+    const result = await getLastestStores();
     res.json({
         success: true,
         data: result
