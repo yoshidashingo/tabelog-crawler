@@ -23,18 +23,15 @@ npm run db:start                    # run mongodb and rabbitmq
 npm run db:stop                     # stop mongodb and rabbitmq
 
 npm run script:cron                 # run crawler task every day
-
-npm run mq:url-ec2-producer         # produce url and ec2 queues
-npm run mq:ec2-consumer             # handle ec2 queue
 ```
 
 ### Distrubuted deployment
 
 ```sh
+npm run aws
+npm run office
+npm run ami
 npm run script:cron
-npm run mq:url-ec2-producer
-npm run mq:ec2-consumer
-
 ```
 
 ### Docs
@@ -105,5 +102,5 @@ cd ~
 cd tabelog-crawler
 git pull
 npm i
-pm2 start rabbitmq/first-step-consumer.js
+pm2 start rabbitmq/url-consumer.js
 ```
