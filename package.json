@@ -1,11 +1,11 @@
 {
     "name": "tabelog-crawler",
     "version": "1.0.0",
-    "description": "",
+    "description": "a crawler for tabelog",
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "nodemon app.js",
+        "start": "concurrently \"npm:task\" \"npm:script:*\"",
         "test": "mocha",
         "db:start": "docker-compose up -d",
         "db:stop": "docker-compose down",
@@ -19,7 +19,7 @@
         "ami": "node rabbitmq/url-consumer.js",
         "aws": "concurrently \"npm:mq:aws:*\"",
         "office": "concurrently \"npm:mq:office:*\"",
-        "demo": "concurrently \"npm:office\" \"npm:aws\" \"npm:ami\""
+        "task": "concurrently \"npm:office\" \"npm:aws\" \"npm:ami\""
     },
     "repository": {
         "type": "git",

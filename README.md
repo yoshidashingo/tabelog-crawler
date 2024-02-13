@@ -13,25 +13,10 @@ npm run db:start
 npm start
 ```
 
-### Commands
+### Deployment
 
 ```sh
-npm start                           # run http server
-npm test                            # run test
-
-npm run db:start                    # run mongodb and rabbitmq
-npm run db:stop                     # stop mongodb and rabbitmq
-
-npm run script:cron                 # run crawler task every day
-```
-
-### Distrubuted deployment
-
-```sh
-npm run aws
-npm run office
-npm run ami
-npm run script:cron
+npm start
 ```
 
 ### Docs
