@@ -13,12 +13,6 @@ npm run db:start
 npm start
 ```
 
-### Deployment
-
-```sh
-npm start
-```
-
 ### Docs
 
 -   http://cheeriojs.github.io/cheerio/
